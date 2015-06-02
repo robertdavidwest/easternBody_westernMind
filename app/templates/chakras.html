@@ -1,0 +1,59 @@
+{% extends "template.html" %}
+{% block content %}
+    <h1>Eastern Body, Western Mind</h1>
+    <div class="add-task">
+        <h3>EACH CHAKRA AT A GLANCE:</h3>
+            <form action = "{{ url_for('chakra_table') }}" method="post">
+                {{ form.csrf_token }}
+
+                {{ form.chakra_number.label }}
+                {{ form.chakra_number }}
+                <span class="error">
+                    {% if form.chakra_number.errors %}
+                        {% for error in form.chakra_number.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                </span>
+
+                {{ form.attribute_type.label }}
+                {{ form.attribute_type }}
+                <span class="error">
+                    {% if form.attribute_type.errors %}
+                        {% for error in form.attribute_type.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                </span>
+
+                <p><input type="submit" value="Refresh Table"></p>
+            </form>
+    </div>
+
+    <div class="entries">
+        <br>
+        <br>
+        <div class="datagrid">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="75px"><strong>Chakra</strong></th>
+                        <th width="300px"><strong>Attribute</strong></th>
+                        <th width="800px"><strong>Description</strong></th>
+                        <th width="300px"><strong>Detail</strong></th>
+                    </tr>
+                </thead>
+                {% for o in current_view %}
+                    <tr>
+                        <td width="75px">{{ o.chakra_number }}</td>
+                        <td width="300px">{{ o.attribute_type }}</td>
+                        <td width="800px">{{ o.attribute_description }}</td>
+                        <td width="300px">{{ o.attribute_detail }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <br>
+        <br>
+    </div>
+{% endblock %}
